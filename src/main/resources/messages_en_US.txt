@@ -1,0 +1,7 @@
+help.bank.balance: Show your balance
+help.bank.deposit: Deposits money
+help.bank.withdraw: Withdraws money
+help.bank.pay: Pay a player money
+help.bank.set: Sets balance of user
+help.bank.add: Add adds gold to balance of user
+help.bank.remove: Removes gold from balance

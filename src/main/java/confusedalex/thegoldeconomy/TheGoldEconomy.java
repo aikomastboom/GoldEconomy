@@ -8,11 +8,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import redempt.redlib.commandmanager.ArgType;
 import redempt.redlib.commandmanager.CommandParser;
+import redempt.redlib.commandmanager.Messages;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 public final class TheGoldEconomy extends JavaPlugin {
 
@@ -44,11 +46,13 @@ public final class TheGoldEconomy extends JavaPlugin {
     localeMap.put("tr_TR", LocaleUtils.toLocale("tr_TR"));
     localeMap.put("pt_BR", LocaleUtils.toLocale("pt_BR"));
     localeMap.put("nb_NO", LocaleUtils.toLocale("nb_NO"));
+    localeMap.put("nl_NL", LocaleUtils.toLocale("nl_NL"));
 
     if (localeMap.containsKey(language)) {
       bundle = ResourceBundle.getBundle("messages", localeMap.get(language));
     } else {
       bundle = ResourceBundle.getBundle("messages", Locale.US);
+      language = "en_US";
       getLogger().warning("Invalid language in config. Defaulting to English.");
     }
 
@@ -65,11 +69,15 @@ public final class TheGoldEconomy extends JavaPlugin {
     // Commands from RedLib
     ArgType<OfflinePlayer> offlinePlayer = new ArgType<>("offlinePlayer", Bukkit::getOfflinePlayer)
             .tabStream(c -> Bukkit.getOnlinePlayers().stream().map(Player::getName));
-    new CommandParser(this.getResource("commands.rdcml"))
-            .setArgTypes(offlinePlayer)
-            .parse()
-            .register("TheGoldEconomy",
-                    new Commands(bundle, eco, configFile, util));
+    new CommandParser(this.getResource("commands.rdcml"),
+        Messages.load(this,
+                this.getResource("messages.txt"),
+                "messages_" + language + ".txt",
+                Pattern.compile("help.bank%\\w+=\\w+%")))
+        .setArgTypes(offlinePlayer)
+        .parse()
+        .register("TheGoldEconomy",
+                new Commands(bundle, eco, configFile, util));
 
     // Event class registering
     Bukkit.getPluginManager().registerEvents(new Events(this, eco.bank), this);

@@ -20,7 +20,7 @@ public class Converter {
   }
 
   public int getValue(Material material) {
-    if (eco.plugin.getConfig().getString("base").equals("nuggets")) {
+    if ("nuggets".equals(eco.plugin.getConfig().getString("base"))) {
       if (material.equals(Material.GOLD_NUGGET))
         return 1;
       if (material.equals(Material.GOLD_INGOT))
@@ -102,9 +102,10 @@ public class Converter {
     int blockValue = getValue(Material.GOLD_BLOCK);
     int ingotValue = getValue(Material.GOLD_INGOT);
 
-    if (value / blockValue > 0) {
+    int blockAmount = value / blockValue;
+    if (blockAmount > 0) {
       HashMap<Integer, ItemStack> blocks = player.getInventory()
-              .addItem(new ItemStack(Material.GOLD_BLOCK, value / blockValue));
+              .addItem(new ItemStack(Material.GOLD_BLOCK, blockAmount));
       for (ItemStack item : blocks.values()) {
         if (item != null && item.getType() == Material.GOLD_BLOCK && item.getAmount() > 0) {
           player.getWorld().dropItem(player.getLocation(), item);
@@ -115,9 +116,10 @@ public class Converter {
 
     value -= (value / blockValue) * blockValue;
 
-    if (value / ingotValue > 0) {
+    int ingotAmount = value / ingotValue;
+    if (ingotAmount > 0) {
       HashMap<Integer, ItemStack> ingots = player.getInventory()
-              .addItem(new ItemStack(Material.GOLD_INGOT, value / ingotValue));
+              .addItem(new ItemStack(Material.GOLD_INGOT, ingotAmount));
       for (ItemStack item : ingots.values()) {
         if (item != null && item.getType() == Material.GOLD_INGOT && item.getAmount() > 0) {
           player.getWorld().dropItem(player.getLocation(), item);
@@ -126,19 +128,23 @@ public class Converter {
       }
     }
 
-    value -= (value / ingotValue) * ingotValue;
+    if ("nuggets".equalsIgnoreCase(eco.plugin.getConfig().getString("base"))){
+      value -= (value / ingotValue) * ingotValue;
 
-    if (eco.plugin.getConfig().getString("base").equals("nuggets") && value > 0) {
-      HashMap<Integer, ItemStack> nuggets = player.getInventory().addItem(new ItemStack(Material.GOLD_NUGGET, value));
-      for (ItemStack item : nuggets.values()) {
-        if (item != null && item.getType() == Material.GOLD_NUGGET && item.getAmount() > 0) {
-          player.getWorld().dropItem(player.getLocation(), item);
-          warning = true;
+      int nuggetAmount = value;
+      if( nuggetAmount > 0) {
+        HashMap<Integer, ItemStack> nuggets = player.getInventory().addItem(new ItemStack(Material.GOLD_NUGGET, nuggetAmount));
+        for (ItemStack item : nuggets.values()) {
+          if (item != null && item.getType() == Material.GOLD_NUGGET && item.getAmount() > 0) {
+            player.getWorld().dropItem(player.getLocation(), item);
+            warning = true;
+          }
         }
       }
     }
-    if (warning)
-      eco.util.sendMessageToPlayer(String.format(bundle.getString("warning.drops")), player);
+    if (warning) {
+        eco.util.sendMessageToPlayer(String.format(bundle.getString("warning.drops")), player);
+    }
   }
 
   public void withdrawAll(Player player) {

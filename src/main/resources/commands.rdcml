@@ -1,12 +1,14 @@
 bank {
     balance {
         help show your balance
+        helpmsg help.bank.balance
         user player
         hook balance
     }
 
     deposit string:gold/all?* {
         help deposits money
+        helpmsg help.bank.deposit
         hook deposit
         user player
 
@@ -14,30 +16,35 @@ bank {
 
     withdraw string:gold/all?* {
         help withdraws money
+        helpmsg help.bank.withdraw
         hook withdraw
         user player
     }
 
     pay offlinePlayer:target int:gold* {
         help pay a player money
+        helpmsg help.bank.pay
         hook pay
         user player
     }
 
     set offlinePlayer:target int:gold* {
         help sets balance of user
+        helpmsg help.bank.set
         hook set
         permission thegoldeconomy.set
     }
 
-    add offlinePlayer:taret int:gold* {
+    add offlinePlayer:target int:gold* {
         help add adds gold to balance of user
+        helpmsg help.bank.add
         hook add
         permission thegoldeconomy.add
     }
 
     remove offlinePlayer:target int:gold* {
         help removes gold from balance
+        helpmsg help.bank.remove
         hook remove
         permission thegoldeconomy.remove
     }

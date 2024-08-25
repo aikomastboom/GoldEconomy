@@ -1,0 +1,7 @@
+help.bank.balance: Hoeveel Goud je hebt
+help.bank.deposit: Zet Goud uit je inventaris op de bank
+help.bank.withdraw: Haal Goud van de bank in je inventaris
+help.bank.pay: Betaal een andere speler
+help.bank.set: Zet de bank Goud balans direct
+help.bank.add: Stort Goud op de bank van een speler
+help.bank.remove: Neem Goud uit de bank vaan een speler

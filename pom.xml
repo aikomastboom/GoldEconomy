@@ -6,13 +6,15 @@
 
     <groupId>ConfusedAlex</groupId>
     <artifactId>TheGoldEconomy</artifactId>
-    <version>1.6.4</version>
+    <version>1.6.5-AIKO</version>
     <packaging>jar</packaging>
 
     <name>TheGoldEconomy</name>
 
     <properties>
-        <java.version>1.8</java.version>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -21,16 +23,17 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.13.0</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
+                    <release>${java.version}</release>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.4</version>
+                <version>3.5.3</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -97,7 +100,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.18-R0.1-SNAPSHOT</version>
+            <version>1.21-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -114,8 +117,8 @@
         </dependency>
         <dependency>
             <groupId>com.github.Redempt</groupId>
-            <artifactId>RedLib</artifactId>
-            <version>6.5.2</version>
+            <artifactId>RedCommands</artifactId>
+            <version>1.5.7</version>
         </dependency>
         <dependency>
             <groupId>com.github.simplix-softworks</groupId>
